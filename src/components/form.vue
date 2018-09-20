@@ -4,7 +4,7 @@
             <legend>表单集合演示</legend>
         </fieldset>
         {{formData}}
-        <form class="layui-form" action="">
+        <form class="layui-form">
             <div class="layui-form-item" v-for="(item, index) in items">
                 <label class="layui-form-label" v-if="item.label">{{item.label.text}}：</label>
                 <div class="layui-input-block" v-if="item.editorOptions&&item.editorOptions.placeholder">
@@ -13,7 +13,7 @@
                     <!-- 文本区域 -->
                     <textarea :name="item.dataField" :placeholder="item.editorOptions.placeholder" class="layui-textarea" v-model="formData[item.dataField]" v-if="item.editorType&&item.editorType=='boxTextArea'"></textarea>
                     <!-- 编辑器 -->
-                    <textarea class="layui-textarea layui-hide" lay-verify="content" id="LAY_demo_editor" :name="item.dataField" v-model="formData[item.dataField]" v-if="item.editorType&&item.editorType=='boxTextEditor'"></textarea>
+                    <textarea class="layui-textarea layui-hide" id="box-editor" lay-verify="content" :name="item.dataField" v-model="formData[item.dataField]" v-if="item.editorType&&item.editorType=='boxTextEditor'"></textarea>
                     <!-- 下拉列表 -->
                     <select lay-filter="aihao" :name="item.dataField" v-if="item.editorType&&item.editorType=='boxSelectBox'" v-model="formData[item.dataField]">
                         <option :value="select_item[item.editorOptions.valueExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource">{{select_item[item.editorOptions.displayExpr]}}</option>
@@ -25,7 +25,18 @@
                     <!-- 开关 -->
                     <input type="checkbox" :name="item.dataField" lay-skin="switch" lay-text="ON|OFF" v-if="item.editorType&&item.editorType=='boxSwitch'" v-model="formData[item.dataField]">
                     <!-- 日期 -->
-                    <input type="text" :name="item.dataField" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input box-date" v-if="item.editorType&&item.editorType=='boxDateBox'" v-model="formData[item.dataField]" @click="onDateBoxHandler">
+                    <input 
+                        type="text" 
+                        :name="item.dataField" 
+                        lay-verify="date" 
+                        placeholder="yyyy-MM-dd" 
+                        autocomplete="off" 
+                        class="layui-input box-date" 
+                        v-if="item.editorType&&item.editorType=='boxDateBox'" 
+                        v-model="formData[item.dataField]"
+                    >
+                    <!-- 显示文本 -->
+                    <label v-if="item.editorType&&item.editorType=='boxLabel'" ></label>
                 </div>
             </div>
             <!-- <div class="layui-form-item">

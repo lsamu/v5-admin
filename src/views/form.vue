@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dxform ref="boxForm"></dxform>
+    <dxform ref="boxForm" :ItemObj="itemList"></dxform>
   </div>
 </template>
 <script lang="ts">
@@ -14,12 +14,12 @@ import dxform from "@/components/form.vue";
 })
 export default class Home extends Vue {
   boxForm = "boxForm";
+  itemList:any=[];
 
   public mounted() {
     let form = this.$refs[this.boxForm] as any;
     form.option({
       formData: {
-       date:"123131231"
       },
       colCount: 2,
       items: [
@@ -215,6 +215,8 @@ export default class Home extends Vue {
         }
       ]
     });
+
+    form.getEditor();
   }
 }
 </script>
