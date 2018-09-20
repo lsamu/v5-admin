@@ -100,6 +100,9 @@ export default class formController extends Vue {
         form.on('submit', (data: any) => {
           this.formData[data.elem.name] = data.value;
         });
+        form.on('*',(data:any)=>{
+          console.log(data);
+        });
         form.render();
         laydate.render({
           elem: ".box-date",
