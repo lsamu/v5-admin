@@ -100,14 +100,19 @@
                     </label>
                     
                     <!--模板-->
-                    <div v-if="item.editorType&&item.editorType=='boxTemplate'" :id="item.dataField">
-                        {{item.template({
+                    <div v-if="item.editorType&&item.editorType=='boxTemplate'" :id="item.dataField" class="box-template" :data="item.dataField">
+                        <!-- {{item.template({
                             component: this,
                             dataField: item.dataField,
                             editorOptions: item.editorOptions,
                             editorType: item.editorType
-                        })}}
+                        })}} -->
                     </div>
+                    <!-- 百度编辑器 -->
+                    <textarea 
+                        v-if="item.editorType&&item.editorType=='boxUEditor'" 
+                        v-model="formData[item.dataField]"
+                    ></textarea>
                 </div>
             </div>
             <!-- <div class="layui-form-item">
