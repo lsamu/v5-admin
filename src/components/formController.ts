@@ -79,42 +79,72 @@ export default class formController extends Vue {
   @Watch("items")
   public async render_form(oldVal: any, newVal: any) {
     await this.$nextTick(() => {
-      layui.use(["form", "layedit", "laydate"], () => {
+      layui.use(["form", "layedit", "laydate",'jquery'], () => {
         let form = layui.form,
           layer = layui.layer,
           layedit = layui.layedit,
           laydate = layui.laydate;
+        let $ = layui.jquery;
         this.form = form;
         form.on('select', (data: any) => {
           this.formData[data.elem.name] = data.value;
         });
         form.on('checkbox', (data: any) => {
+          let m = new Map<number, number>();
           this.formData[data.elem.name] = data.value;
         });
+        //单选框
         form.on('switch', (data: any) => {
-          this.formData[data.elem.name] = data.value;
-        });
-        form.on('radio', (data: any) => {
-          this.formData[data.elem.name] = data.value;
-        });
-        form.on('submit', (data: any) => {
-          this.formData[data.elem.name] = data.value;
-        });
-        form.on('*',(data:any)=>{
-          console.log(data);
-        });
-        form.render();
-        laydate.render({
-          elem: ".box-date",
-          done: function (value: any, date: any, endDate: any) {
-            console.log(value, date, endDate);
+          let c = data.elem.checked;
+          if (c) {
+            this.formData[data.elem.name] = 1;
+          } else {
+            this.formData[data.elem.name] = 0;
           }
         });
 
-        let index = layedit.build("box-editor");
+        form.on('radio', (data: any) => {
+          this.formData[data.elem.name] = data.value;
+        });
+        form.render();
+        //日期选择框
+        let bb = document.getElementsByClassName("box-date");
+        for (let b of bb) {
+          laydate.render({
+            elem: b,
+            done: (value: any, date: any, endDate: any) => {
+              let name = (b as any).name;
+              this.formData[name] = value;
+            }
+          });
+        }
+
+        let ee = document.getElementsByClassName("box-editor");
+        let editor_index = 1;
+        for (const e of ee) {
+          e.id = "box-editor" + editor_index;
+          let index = layedit.build(e.id);
+          // form.verify({
+          //   content: function (value: any) {
+          //     return layedit.getContent(index);
+          //   }
+          // });
+          console.log(index);
+          editor_index++;
+        }
+
+        $("iframe[textarea=editor]").contents().find("body").keyup(function(a:any,b:any,c:any){
+            console.log(a,b,c);
+       });
+       // console.log($("iframe[textarea=editor]").contents());
 
       });
     });
+  }
+
+  @Watch("formData")
+  public layeditUpdate() {
+    console.log("formData");
   }
 
   /**
@@ -130,17 +160,6 @@ export default class formController extends Vue {
   ) {
     this.formData = data.formData;
     this.items = data.items;
-
-    // await this.$nextTick(() => {
-    //   layui.use(["form", "layedit", "laydate"], () => {
-    //     let form = layui.form,
-    //       layer = layui.layer,
-    //       layedit = layui.layedit,
-    //       laydate = layui.laydate;
-    //       form.render();
-    //     let index = layedit.build("box-editor");
-    //   });
-    // });
   }
 
   /**
@@ -149,5 +168,18 @@ export default class formController extends Vue {
    */
   public getEditor(dataField?: string) {
     console.log(this.form);
+    
+  }
+
+  public editChangeHandler() {
+    console.log("1233123");
+  }
+
+  public submitHandler() {
+    console.log(13123);
+    layui.use(["form", "layedit", "laydate"], () => {
+      let layedit = layui.layedit;
+      layedit.sync(1);
+    });
   }
 }

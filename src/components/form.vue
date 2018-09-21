@@ -4,26 +4,82 @@
             <legend>表单集合演示</legend>
         </fieldset>
         {{formData}}
-        <form class="layui-form">
-            <div class="layui-form-item" v-for="(item, index) in items">
-                <label class="layui-form-label" v-if="item.label">{{item.label.text}}：</label>
+        <div class="layui-form">
+            <div class="layui-form-item" v-for="(item, index) in items" :key="item.aaa">
+                <label class="layui-form-label" v-if="item.label"><span class="x-red">*</span>{{item.label.text}}：</label>
                 <div class="layui-input-block" v-if="item.editorOptions&&item.editorOptions.placeholder">
                     <!-- 普通文本 -->
-                    <input type="text" lay-verify="title" autocomplete="off" class="layui-input" :name="item.dataField" :placeholder="item.editorOptions.placeholder" v-model="formData[item.dataField]" v-if="!item.editorType||item.editorType=='boxTextBox'">
+                    <input 
+                        type="text" 
+                        lay-verify="title" 
+                        autocomplete="off" 
+                        class="layui-input" 
+                        :name="item.dataField" 
+                        :placeholder="item.editorOptions.placeholder" 
+                        v-model="formData[item.dataField]" 
+                        v-if="!item.editorType||item.editorType=='boxTextBox'"
+                    >
                     <!-- 文本区域 -->
-                    <textarea :name="item.dataField" :placeholder="item.editorOptions.placeholder" class="layui-textarea" v-model="formData[item.dataField]" v-if="item.editorType&&item.editorType=='boxTextArea'"></textarea>
+                    <textarea 
+                        :name="item.dataField" 
+                        :placeholder="item.editorOptions.placeholder" 
+                        class="layui-textarea" 
+                        v-model="formData[item.dataField]" 
+                        v-if="item.editorType&&item.editorType=='boxTextArea'"
+                    ></textarea>
                     <!-- 编辑器 -->
-                    <textarea class="layui-textarea layui-hide" id="box-editor" lay-verify="content" :name="item.dataField" v-model="formData[item.dataField]" v-if="item.editorType&&item.editorType=='boxTextEditor'"></textarea>
+                    <textarea 
+                        class="layui-textarea layui-hide box-editor" 
+                        lay-verify="content" 
+                        :name="item.dataField" 
+                        v-model="formData[item.dataField]" 
+                        v-if="item.editorType&&item.editorType=='boxTextEditor'"
+                    ></textarea>
                     <!-- 下拉列表 -->
-                    <select lay-filter="aihao" :name="item.dataField" v-if="item.editorType&&item.editorType=='boxSelectBox'" v-model="formData[item.dataField]">
-                        <option :value="select_item[item.editorOptions.valueExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource">{{select_item[item.editorOptions.displayExpr]}}</option>
+                    <select 
+                        lay-filter="aihao" 
+                        :name="item.dataField" 
+                        v-if="item.editorType&&item.editorType=='boxSelectBox'" 
+                        v-model="formData[item.dataField]"
+                    >
+                        <option 
+                            :value="select_item[item.editorOptions.valueExpr]" 
+                            v-for="(select_item,select_index) in item.editorOptions.dataSource"
+                            :key="select_item.aaa"
+                            >{{select_item[item.editorOptions.displayExpr]}}</option>
                     </select>
                     <!-- 单选框 -->
-                    <input type="radio" checked="" :value="select_item[item.editorOptions.valueExpr]" :title="select_item[item.editorOptions.displayExpr]" :name="item.dataField" v-if="item.editorType&&item.editorType=='boxRadioBox'" v-for="(select_item,select_index) in item.editorOptions.dataSource" v-model="formData[item.dataField]">
+                    <input 
+                        type="radio" 
+                        checked="" 
+                        :value="select_item[item.editorOptions.valueExpr]" 
+                        :title="select_item[item.editorOptions.displayExpr]" 
+                        :name="item.dataField" 
+                        v-if="item.editorType&&item.editorType=='boxRadioBox'" 
+                        v-for="(select_item,select_index) in item.editorOptions.dataSource" 
+                        v-model="formData[item.dataField]"
+                        :key="select_item.aaa"
+                    >
                     <!-- 复选框 -->
-                    <input type="checkbox" v-if="item.editorType&&item.editorType=='boxCheckListBox'" :name="item.dataField[select_item[item.editorOptions.valueExpr]]" :title="select_item[item.editorOptions.displayExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" v-model="formData[item.dataField]">
+                    <input 
+                        type="checkbox" 
+                        v-if="item.editorType&&item.editorType=='boxCheckListBox'" 
+                        :name="item.dataField" 
+                        :title="select_item[item.editorOptions.displayExpr]" 
+                        v-for="(select_item,select_index) in item.editorOptions.dataSource" 
+                        :value="select_item[item.editorOptions.valueExpr]"
+                        v-model="formData[item.dataField]"
+                        :key="select_item.aaa"
+                    >
                     <!-- 开关 -->
-                    <input type="checkbox" :name="item.dataField" lay-skin="switch" lay-text="ON|OFF" v-if="item.editorType&&item.editorType=='boxSwitch'" v-model="formData[item.dataField]">
+                    <input 
+                        type="checkbox" 
+                        :name="item.dataField" 
+                        lay-skin="switch" 
+                        lay-text="ON|OFF" 
+                        v-if="item.editorType&&item.editorType=='boxSwitch'" 
+                        v-model="formData[item.dataField]"
+                    >
                     <!-- 日期 -->
                     <input 
                         type="text" 
@@ -34,9 +90,24 @@
                         class="layui-input box-date" 
                         v-if="item.editorType&&item.editorType=='boxDateBox'" 
                         v-model="formData[item.dataField]"
+                        v-on:input="onSelectDateHandler(item.dataField,formData[item.dataField])"
                     >
                     <!-- 显示文本 -->
-                    <label v-if="item.editorType&&item.editorType=='boxLabel'" ></label>
+                    <label 
+                        v-if="item.editorType&&item.editorType=='boxLabel'" 
+                    >
+                        {{formData[item.dataField]}}
+                    </label>
+                    
+                    <!--模板-->
+                    <div v-if="item.editorType&&item.editorType=='boxTemplate'" :id="item.dataField">
+                        {{item.template({
+                            component: this,
+                            dataField: item.dataField,
+                            editorOptions: item.editorOptions,
+                            editorType: item.editorType
+                        })}}
+                    </div>
                 </div>
             </div>
             <!-- <div class="layui-form-item">
@@ -252,11 +323,11 @@
             </div> -->
             <div class="layui-form-item">
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1" @click="submitHandler">立即提交</button>
                     <button type="reset" class="layui-btn layui-btn-primary">重置</button>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </template>
 <script lang="ts">

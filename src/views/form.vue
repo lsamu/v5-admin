@@ -20,9 +20,33 @@ export default class Home extends Vue {
     let form = this.$refs[this.boxForm] as any;
     form.option({
       formData: {
+        title:"1331231312",
+        classid:2,
+        sex:1,
+        classids:"1,2",
+        switch:1,
+        date:"2018-09-20",
+        editor:"我是编辑器内容"
       },
       colCount: 2,
       items: [
+        {
+          colSpan: 2,
+          dataField: "title",
+          label: {
+            text: "标题"
+          },
+          editorType: "boxLabel",
+          editorOptions: {
+            placeholder: "请输入标题."
+          },
+          validationRules: [
+            {
+              type: "required",
+              message: "不能为空!"
+            }
+          ]
+        },
         {
           colSpan: 2,
           dataField: "title",
@@ -97,11 +121,11 @@ export default class Home extends Vue {
             placeholder: "请选择单选.",
             dataSource: [
               {
-                name: "分类1",
+                name: "男",
                 id: 1
               },
               {
-                name: "分类2",
+                name: "女",
                 id: 2
               }
             ],
@@ -194,8 +218,25 @@ export default class Home extends Vue {
               message: "不能为空!"
             }
           ],
-          template: (data: any, aItemEle: any) => {
-            console.log(data);
+        },
+        {
+          colSpan: 2,
+          dataField: "template",
+          label: {
+            text: "编辑器"
+          },
+          editorType: "boxTemplate",
+          editorOptions: {
+            placeholder: "请输入编辑器内容."
+          },
+          validationRules: [
+            {
+              type: "required",
+              message: "不能为空!"
+            }
+          ],
+          template: (data: any, aItemEle: string) => {
+            console.log(document.getElementById("template") as any);
           }
         },
         {
