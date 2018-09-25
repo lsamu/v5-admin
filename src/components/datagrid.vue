@@ -140,39 +140,32 @@ export default class Home extends Vue {
     });
   }
 
- /**
-     * 配置操作
-     */
-    public option(data: {
-        dataSource:[],
-        columns: [],
-        toolbar:[],
-        searchForm:{}
-    }) {
+  /**
+   * 配置操作
+   */
+  public option(data: {
+    dataSource: [];
+    columns: [];
+    toolbar: [];
+    searchForm: {};
+  }) {
+    this.columns = data.columns;
+  }
 
-        this.columns = data.columns;
-	}
-	
-	 /**
-     * 刷新
-     */
-    public refush() {
+  /**
+   * 刷新
+   */
+  public refush() {}
 
-    }
+  /**
+   * 获取工具条实例
+   */
+  public getToolBar() {}
 
-    /**
-     * 获取工具条实例
-     */
-    public getToolBar(){
-
-    }
-
-    /**
-     * 获取搜索表单
-     */
-    public getSearchForm(){
-
-    }
+  /**
+   * 获取搜索表单
+   */
+  public getSearchForm() {}
 }
 </script>
 
