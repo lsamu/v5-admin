@@ -6,7 +6,6 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import dxform from "@/components/form.vue";
-import $ from "jquery";
 
 import "../../public/static/ueditor/ueditor.config.js";
 import "../../public/static/ueditor/ueditor.all.js";
@@ -224,42 +223,42 @@ export default class Home extends Vue {
             }
           ]
         },
-        {
-          colSpan: 2,
-          dataField: "template",
-          label: {
-            text: "编辑器"
-          },
-          editorType: "boxTemplate",
-          editorOptions: {
-            placeholder: "请输入编辑器内容."
-          },
-          validationRules: [
-            {
-              type: "required",
-              message: "不能为空!"
-            }
-          ],
-          template: (data: any, aItemEle: any) => {
-            let aa = $("<textarea id='editor1'></textarea>");
-            aItemEle.append(aa);
+        // {
+        //   colSpan: 2,
+        //   dataField: "template",
+        //   label: {
+        //     text: "编辑器"
+        //   },
+        //   editorType: "boxTemplate",
+        //   editorOptions: {
+        //     placeholder: "请输入编辑器内容."
+        //   },
+        //   validationRules: [
+        //     {
+        //       type: "required",
+        //       message: "不能为空!"
+        //     }
+        //   ],
+        //   template: (data: any, aItemEle: any) => {
+        //     let aa = $("<textarea id='editor1'></textarea>");
+        //     aItemEle.append(aa);
 
-            let editor = UE.getEditor(aa[0].id, {
-              autoHeightEnabled: false,
-              autoFloatEnabled: true, //是否工具栏可浮动
-              initialContent: "", //初始化编辑器的内容,也可以通过textarea/script给值，看官网例子
-              autoClearinitialContent: true, //是否自动清除编辑器初始内容，注意：如果focus属性设置为true,这个也为真，那么编辑器一上来就会触发导致初始化的内容看不到了
-              initialFrameWidth: null,
-              initialFrameHeight: 450,
-              BaseUrl: "/static/ueditor/",
-              UEDITOR_HOME_URL: "/static/ueditor/",
-              serverUrl: "http://www.baidu.com",
-              elementPathEnabled: true,
-              enableAutoSave: false
-            });
+        //     let editor = UE.getEditor(aa[0].id, {
+        //       autoHeightEnabled: false,
+        //       autoFloatEnabled: true, //是否工具栏可浮动
+        //       initialContent: "", //初始化编辑器的内容,也可以通过textarea/script给值，看官网例子
+        //       autoClearinitialContent: true, //是否自动清除编辑器初始内容，注意：如果focus属性设置为true,这个也为真，那么编辑器一上来就会触发导致初始化的内容看不到了
+        //       initialFrameWidth: null,
+        //       initialFrameHeight: 450,
+        //       BaseUrl: "/static/ueditor/",
+        //       UEDITOR_HOME_URL: "/static/ueditor/",
+        //       serverUrl: "http://www.baidu.com",
+        //       elementPathEnabled: true,
+        //       enableAutoSave: false
+        //     });
             
-          }
-        },
+        //   }
+        // },
         {
           itemType: "group",
           caption: "用户组",
