@@ -145,7 +145,9 @@ export default class Home extends Vue {
      */
     public option(data: {
         dataSource:[],
-        columns: []
+        columns: [],
+        toolbar:[],
+        searchForm:{}
     }) {
 
         this.columns = data.columns;

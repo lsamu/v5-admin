@@ -272,7 +272,8 @@ export default class Home extends Vue {
       ]
     });
 
-    form.getEditor();
+    let b = form.getEditor("title");
+    console.log(b);
   }
 }
 </script>

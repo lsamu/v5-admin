@@ -7,6 +7,7 @@
                 :label="item.label.text" 
                 v-if="!item.editorType||item.editorType=='boxTextBox'" 
                 :placeholder="item.editorOptions.placeholder"
+                :ref="item.dataField"
             ></boxTextBox>
             <boxTextArea 
                 v-model="formData[item.dataField]" 
@@ -90,11 +91,24 @@ export default class Home extends Vue {
   items: any = [];
   mounted() {}
 
+  /**
+   *配置表单
+   */
   public option(data: { items: []; columns: [] }) {
     this.items = data.items;
   }
 
-  public getEditor() {}
+  /**
+   *获取指定实例
+   */
+  public getEditor(dataField: any): any {
+    console.log(this.$refs);
+    console.log(this.$refs[0]);
+    console.log(this.$refs.title);
+    console.log(this.$refs["title"]);
+    console.log(this.$refs[this.formData["title"]]);
+    return this.$refs[dataField];
+  }
 }
 </script>
 
