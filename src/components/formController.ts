@@ -21,6 +21,7 @@ export default class formController extends Vue {
           layedit = layui.layedit,
           laydate = layui.laydate;
         let $ = layui.jquery;
+        console.log(layui);
         form.on('select', (data: any) => {
           this.formData[data.elem.name] = data.value;
         });

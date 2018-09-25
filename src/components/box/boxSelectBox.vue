@@ -1,53 +1,55 @@
 <template>
-   <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label" v-text="label"></label>
-        <div class="layui-input-block">
-             <div class="layui-unselect layui-form-select" :class="{'layui-form-selected':selectShow}">
-            <div class="layui-select-title">
-                <input type="text" placeholder="请选择" @click="changeSelect" readonly :value="currentValue.Text" class="layui-input layui-unselect">
-                <i class="layui-edge"></i>
-            </div>
-            <dl class="layui-anim layui-anim-upbit" v-show="selectShow">
-                <dd v-for="item in options" :class="{'layui-this':currentValue.Value==item.Value}" @click="currentSelect(item)"  value="item.Value">{{item.Text}}</dd>
-            </dl>
-        </div>
-        </div>
+  <div class="layui-form">
+    <div class="layui-form-item layui-form-text">
+      <label class="layui-form-label" v-text="label"></label>
+      <div class="layui-input-block">
+        <select lay-filter="aihao" v-model="currentValue">
+          <option :value="item[currentValueExpr]" v-for="item in options" :key="item.aaa">{{item[currentDisplayExpr]}}</option>
+        </select>
+      </div>
     </div>
-       
+  </div>
 </template>
-<script>
-    export default {
-        props:['value','options','label'],
-        data(){
-            return {
-                selectShow:false,
-                currentValue: {
-                    Text:'',
-                    Value:null,
-                }
-            }
-        },
-        created(){
-            let self=this
-            self.options.forEach(item=>{
-                if(item.Value==self.value){
-                    self.currentValue={
-                        Text:item.Text,
-                        Value:item.Value
-                    }
-                }
-            })
-        },
-        methods:{
-            currentSelect(item){
-                let self=this;
-                self.currentValue=item
-                this.changeSelect();
-                this.$emit('input', item.Value);
-            },
-            changeSelect(){
-                this.selectShow=!this.selectShow;
-            }
-        }
-    }
+<script lang="ts">
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
+import { setTimeout } from "timers";
+@Component({})
+export default class Home extends Vue {
+  @Prop()
+  value!: string;
+  @Prop()
+  label!: string;
+  @Prop()
+  options!: any[];
+
+  @Prop()
+  displayExpr!: string;
+  @Prop()
+  valueExpr!: string;
+
+  //选择值
+  currentValue: string = "";
+  currentDisplayExpr: string = "";
+  currentValueExpr: string = "";
+
+  async mounted() {
+    this.currentValue = this.value;
+    this.currentDisplayExpr = this.displayExpr;
+    this.currentValueExpr = this.valueExpr;
+    await this.$nextTick(() => {
+      layui.use(["form", "layedit", "laydate", "jquery"], () => {
+        let form = layui.form;
+        form.on("select", (data: any) => {
+          this.currentValue = data.value;
+        });
+        form.render();
+      });
+    });
+  }
+
+  @Watch("currentValue")
+  setItemValue(val: any) {
+    this.$emit("input", val);
+  }
+}
 </script>

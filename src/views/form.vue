@@ -1,15 +1,11 @@
 <template>
   <div>
-    <dxform ref="boxForm" :ItemObj="itemList"></dxform>
+    <dxform ref="boxForm"></dxform>
   </div>
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import dxform from "@/components/form.vue";
-
-import "../../public/static/ueditor/ueditor.config.js";
-import "../../public/static/ueditor/ueditor.all.js";
-import "../../public/static/ueditor/lang/zh-cn/zh-cn.js";
+import dxform from "@/components/boxForm.vue";
 
 @Component({
   components: {
@@ -18,7 +14,6 @@ import "../../public/static/ueditor/lang/zh-cn/zh-cn.js";
 })
 export default class Home extends Vue {
   boxForm = "boxForm";
-  itemList: any = [];
 
   public mounted() {
     let form = this.$refs[this.boxForm] as any;
@@ -259,21 +254,21 @@ export default class Home extends Vue {
             
         //   }
         // },
-        {
-          itemType: "group",
-          caption: "用户组",
-          items: []
-        },
-        {
-          itemType: "button",
-          caption: "按钮组",
-          items: []
-        },
-        {
-          itemType: "tabbed",
-          caption: "标签组",
-          items: []
-        }
+        // {
+        //   itemType: "group",
+        //   caption: "用户组",
+        //   items: []
+        // },
+        // {
+        //   itemType: "button",
+        //   caption: "按钮组",
+        //   items: []
+        // },
+        // {
+        //   itemType: "tabbed",
+        //   caption: "标签组",
+        //   items: []
+        // }
       ]
     });
 

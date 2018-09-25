@@ -3,11 +3,11 @@
     {{formData}}
     <boxTextBox v-model="formData['title']" label="标题"></boxTextBox>
     <boxTextArea v-model="formData['content']" label="内容"></boxTextArea>
-    <boxSelectBox v-model="formData['classid']" label="分类" :options="[{Text:'分类1',Value:1}]"></boxSelectBox>
+    <boxSelectBox v-model="formData['classid']" label="分类" :options="[{Text:'分类1',Value:1},{Text:'分类2',Value:2}]" value="1"></boxSelectBox>
     <boxSwitchBox v-model="formData['flag']" label="是否"></boxSwitchBox>
     <boxEditorBox v-model="formData['editor']" label="编辑器"></boxEditorBox>
-    <boxCheckBox v-model="formData['classids']" label="多选"></boxCheckBox>
-    <boxRadioBox v-model="formData['sex']" label="性别" :options="[{Text:'男',Value:1},{Text:'女',Value:2}]"></boxRadioBox>
+    <boxCheckBox v-model="formData['classids']" label="多选" :options="[{Text:'分类1',Value:1},{Text:'分类2',Value:2}]"></boxCheckBox>
+    <boxRadioBox v-model="formData['sex']" label="性别" :options="[{Text:'男',Value:1},{Text:'女',Value:2}]" value="1"></boxRadioBox>
     <boxDateBox v-model="formData['date']" label="日期"></boxDateBox>
   </div>
 </template>
@@ -36,7 +36,14 @@ import boxDateBox from "@/components/box/boxDateBox.vue";
 })
 export default class Home extends Vue {
   formData: object = {
-    content: "我的文本内容121313123312312"
+    title:"我是标题",
+    content: "我是内容",
+    classid:2,
+    editor:"我的编辑器",
+    flag:true,
+    classids:"1,2",
+    sex:2,
+    date:"2018-09-25"
   };
 }
 </script>

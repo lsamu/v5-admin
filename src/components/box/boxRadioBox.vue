@@ -1,47 +1,62 @@
 <template>
-<div class="layui-form-item layui-form-text">
-        <label class="layui-form-label" v-text="label"></label>
-        <div class="layui-input-block">
-           <div class="layui-unselect layui-form-radio" 
-          v-for="item in options"
-            @click="changeRadio(item)" 
-            :class="{'layui-form-radioed':currentValue.Value==item.Value}">
-            <i class="layui-anim layui-icon" :class="{'layui-anim-scaleSpring':currentValue.Value==item.Value}"></i>
-            <span>{{item.Text}}</span>
+    <div class="layui-form">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label" v-text="label"></label>
+            <div class="layui-input-block">
+                <input
+                        name="radio"
+                        type="radio"
+                        checked=""
+                        :title = "item[currentDisplayExpr]"
+                        :value = "item[currentValueExpr]"
+                        v-for="item in options"
+                        v-model="currentValue"
+                        :key="item.aaa"
+                    >
         </div>
+            </div>
         </div>
-    </div>
 </template>
-<script>
-    export default {
-        props:['value','options','label'],
-        data(){
-            return {
-                currentValue: {
-                    Text:'',
-                    Value:null
-                }
-            }
-        },
-        created(){
-            let self=this
-            self.options.forEach(item=>{
-                if(item.Value==self.value){
-                    self.currentValue={
-                        Text:item.Text,
-                        Value:item.Value
-                    }
-                }
-            })
-        },
-        methods:{
-            changeRadio(item){
-                this.currentValue={
-                        Text:item.Text,
-                        Value:item.Value
-                }
-                this.$emit('input', item.Value);
-            }
-        }
-    }
+<script lang="ts">
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
+import { constants } from "fs";
+
+@Component({})
+export default class Home extends Vue {
+  @Prop()
+  private value!: string;
+  @Prop()
+  private label!: string;
+  @Prop()
+  private options!: any[];
+
+  @Prop()
+  displayExpr!: string;
+  @Prop()
+  valueExpr!: string;
+
+  currentValue: string = "";
+  currentDisplayExpr: string = "";
+  currentValueExpr: string = "";
+
+  async mounted() {
+    this.currentValue = this.value;
+    this.currentDisplayExpr = this.displayExpr;
+    this.currentValueExpr = this.valueExpr;
+    await this.$nextTick(() => {
+      layui.use(["form"], () => {
+        let form = layui.form;
+        form.on("radio", (data: any) => {
+          this.currentValue = data.value;
+        });
+        form.render();
+      });
+    });
+  }
+
+  @Watch("currentValue")
+  setItemValue(val: any) {
+    this.$emit("input", val);
+  }
+}
 </script>

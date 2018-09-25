@@ -51,7 +51,6 @@ export default {
       let self = this;
       let content = layui.layedit.getContent(self.currentIndex);
       if (self.value != content) {
-        // console.log(self.value)
         self.$emit("input", layui.layedit.getContent(self.currentIndex));
       }
       return content;
