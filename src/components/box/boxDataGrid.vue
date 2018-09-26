@@ -22,9 +22,7 @@ export default class MyDataGrid extends Vue {
   async mounted() {
       await this.$nextTick(() => {
       layui.use(["table", "form"], () => {
-        let form = layui.form;
         let table = layui.table;
-        form.render();
 
         table.render({
           elem: "#test",
