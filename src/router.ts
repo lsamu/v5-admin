@@ -16,10 +16,6 @@ export default new Router({
     {
       path: '/form',
       component: () => import('./views/form.vue')
-    },
-    {
-      path: '/test_form',
-      component: () => import('./views/test_form.vue')
     }
   ]
 })

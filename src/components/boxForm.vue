@@ -1,6 +1,6 @@
 <template>
     <div>
-         {{formData}}
+        {{formData}}
         <div v-for="item in items" :key="item.aaa">
             <boxTextBox 
                 v-model="formData[item.dataField]" 
@@ -89,13 +89,21 @@ import boxDateBox from "@/components/box/boxDateBox.vue";
 export default class Home extends Vue {
   formData: any = {};
   items: any = [];
+  formList:any;
   mounted() {}
 
   /**
    *配置表单
    */
-  public option(data: { items: []; columns: [] }) {
-    this.items = data.items;
+  public option(data: { items: []; columns: [] }|string) {
+      let tt = typeof(data);
+      if(tt=="string"){
+        return this.formList[data as string];
+      }else{
+        this.formList = data;
+        this.formData = this.formList.formData;
+        this.items = (data as any).items;
+      }
   }
 
   /**

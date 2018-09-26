@@ -1,9 +1,13 @@
 <template>
-  <div class="layui-form-item layui-form-text">
-    <label class="layui-form-label" v-text="label"></label>
-    <div class="layui-input-block">
-      <input type="text" lay-verify="title" autocomplete="off" class="layui-input" :placeholder="placeholder" v-model="currentValue" :class="areaClass">
+  <div class="layui-form">
+    <div class="layui-form">
+      <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label" v-text="label"></label>
+        <div class="layui-input-block">
+          <input type="text" lay-verify="title" autocomplete="off" class="layui-input" :placeholder="placeholder" v-model="currentValue" :class="areaClass">
         </div>
+        </div>
+      </div>
     </div>
 </template>
 <script lang="ts">
@@ -22,7 +26,7 @@ export default class Home extends Vue {
 
   currentValue = "";
 
-  mounted(){
+  mounted() {
     this.currentValue = this.value;
   }
 

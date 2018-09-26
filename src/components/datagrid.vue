@@ -70,74 +70,9 @@ import { Component, Vue } from "vue-property-decorator";
 })
 export default class Home extends Vue {
   columns: any = [];
+  dataSource=[];
   async mounted() {
-    await this.$nextTick(() => {
-      layui.use(["table", "form"], () => {
-        let form = layui.form;
-        let table = layui.table;
-
-        form.render();
-        let data = [];
-        for (let index = 0; index < 1000000; index++) {
-          data.push({
-            id: index.toString(),
-            username: "贤心" + index,
-            email: "xianxin@layui.com",
-            sex: "男",
-            city: "浙江杭州",
-            sign: "人生恰似一场修行",
-            experience: "106",
-            ip: "192.168.0.8",
-            logins: "106",
-            joinTime: "2016-10-14"
-          });
-        }
-        table.render({
-          elem: "#test",
-          //url: "https://www.layui.com/demo/table/user/",
-          cellMinWidth: 80, //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-          cols: [
-            [
-              { type: "radio", fixed: "left" },
-              { type: "checkbox", fixed: "left" },
-              {
-                field: "id",
-                width: 80,
-                title: "ID",
-                sort: true,
-                fixed: "left"
-              },
-              { field: "username", width: 80, title: "用户名" },
-              { field: "sex", width: 80, title: "性别", sort: true },
-              { field: "city", width: 80, title: "城市" },
-              { field: "sign", title: "签名", width: "30%", minWidth: 100 }, //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-              {
-                field: "experience",
-                title: "积分",
-                sort: true,
-                totalRow: true
-              },
-              { field: "score", title: "评分", sort: true },
-              { field: "classify", title: "职业" },
-              { field: "wealth", width: 137, title: "财富", sort: true },
-              {
-                field: "id",
-                title: "编辑",
-                width: 160,
-                templet: "#barDemo",
-                unresize: true,
-                fixed: "right"
-              }
-            ]
-          ],
-          data,
-          page: true,
-          toolbar: "#toolbarDemo",
-          totalRow: true,
-          height: "full-100"
-        });
-      });
-    });
+    
   }
 
   /**
@@ -147,9 +82,17 @@ export default class Home extends Vue {
     dataSource: [];
     columns: [];
     toolbar: [];
-    searchForm: {};
+    searchForm: {
+      formData:{
+
+      },
+      items:[
+
+      ]
+    };
   }) {
     this.columns = data.columns;
+    this.dataSource = data.dataSource;
   }
 
   /**

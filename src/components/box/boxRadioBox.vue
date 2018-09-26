@@ -1,5 +1,5 @@
 <template>
-    <div class="layui-form">
+  <!-- <div class="layui-form">
         <div class="layui-form-item layui-form-text">
             <label class="layui-form-label" v-text="label"></label>
             <div class="layui-input-block">
@@ -15,7 +15,21 @@
                     >
         </div>
             </div>
-        </div>
+        </div> -->
+  <div class="layui-form-item layui-form-text">
+    <label class="layui-form-label" v-text="label"></label>
+    <div class="layui-input-block">
+      <div class="layui-unselect layui-form-radio" 
+        v-for="item in options" 
+        :key="item.aaa" 
+        :class="{'layui-form-radioed':currentValue==item[currentValueExpr]}"
+        @click="changeRadio(item[currentValueExpr])"
+        >
+        <i class="layui-anim layui-icon"></i>
+        <div>{{item[currentDisplayExpr]}}</div>
+      </div>
+    </div>
+  </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from "vue-property-decorator";
@@ -43,20 +57,15 @@ export default class Home extends Vue {
     this.currentValue = this.value;
     this.currentDisplayExpr = this.displayExpr;
     this.currentValueExpr = this.valueExpr;
-    await this.$nextTick(() => {
-      layui.use(["form"], () => {
-        let form = layui.form;
-        form.on("radio", (data: any) => {
-          this.currentValue = data.value;
-        });
-        form.render();
-      });
-    });
   }
 
   @Watch("currentValue")
   setItemValue(val: any) {
     this.$emit("input", val);
+  }
+
+  changeRadio(val:any){
+      this.currentValue =val;
   }
 }
 </script>

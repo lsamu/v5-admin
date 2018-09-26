@@ -20,17 +20,16 @@ export default class Home extends Vue {
     form.option({
       formData: {
         title: "1331231312",
+        content:"我是内容",
         classid: 2,
-        sex: 1,
+        sex: 2,
         classids: "1,2",
         switch: 1,
         date: "2018-09-20",
         editor: "我是编辑器内容"
       },
-      colCount: 2,
       items: [
         {
-          colSpan: 2,
           dataField: "title",
           label: {
             text: "标题"
@@ -47,7 +46,6 @@ export default class Home extends Vue {
           ]
         },
         {
-          colSpan: 2,
           dataField: "title",
           label: {
             text: "标题"
@@ -64,7 +62,6 @@ export default class Home extends Vue {
           ]
         },
         {
-          colSpan: 2,
           dataField: "content",
           label: {
             text: "内容"
@@ -81,7 +78,6 @@ export default class Home extends Vue {
           ]
         },
         {
-          colSpan: 2,
           dataField: "classid",
           label: {
             text: "下拉列表"
@@ -110,7 +106,6 @@ export default class Home extends Vue {
           ]
         },
         {
-          colSpan: 2,
           dataField: "sex",
           label: {
             text: "单选"
@@ -139,7 +134,6 @@ export default class Home extends Vue {
           ]
         },
         {
-          colSpan: 2,
           dataField: "classids",
           label: {
             text: "复选"
@@ -168,7 +162,6 @@ export default class Home extends Vue {
           ]
         },
         {
-          colSpan: 2,
           dataField: "switch",
           label: {
             text: "开关"
@@ -185,7 +178,6 @@ export default class Home extends Vue {
           ]
         },
         {
-          colSpan: 2,
           dataField: "date",
           label: {
             text: "日期"
@@ -202,7 +194,6 @@ export default class Home extends Vue {
           ]
         },
         {
-          colSpan: 2,
           dataField: "editor",
           label: {
             text: "编辑器"
@@ -274,6 +265,9 @@ export default class Home extends Vue {
 
     let b = form.getEditor("title");
     console.log(b);
+
+    let formData = form.option("formData");
+    console.log(formData);
   }
 }
 </script>
