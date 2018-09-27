@@ -1,8 +1,8 @@
 <template>
-  <div class="layui-form-item">
-    <label class="layui-form-label" v-text="label"></label>
-    <div class="layui-input-block">
-      <div class="layui-unselect layui-form-checkbox" v-for="item in options" :key="item.aaa" :class="{'layui-form-checked':currentValue==item[currentValueExpr]}" @click="changeCheckd(item[currentValueExpr])"><span>{{item[currentDisplayExpr]}}</span><i class="layui-icon layui-icon-ok"></i></div>
+  <div>
+    <div class="layui-unselect layui-form-checkbox" v-for="item in options.dataSource" :key="item.id" :class="{'layui-form-checked':options.value==item[options.valueExpr]}" @click="changeCheckd(item[options.valueExpr])">
+      <span>{{item[options.displayExpr]}}</span>
+      <i class="layui-icon layui-icon-ok"></i>
     </div>
   </div>
 </template>
@@ -14,35 +14,36 @@ export default class Home extends Vue {
   @Prop()
   private value!: string;
   @Prop()
-  private label!: string;
-  @Prop()
-  private text!: string;
-  @Prop()
-  private options!: any[];
+  private dataSource!: any[];
 
   @Prop()
   displayExpr!: string;
   @Prop()
   valueExpr!: string;
 
-  currentValue: string = "";
-  currentDisplayExpr: string = "";
-  currentValueExpr: string = "";
+  options: any = {
+    value: "",
+    dataSource: [],
+    displayExpr: "title",
+    valueExpr: "id"
+  };
 
-  async mounted() {
-    this.currentValue = this.value;
-    this.currentDisplayExpr = this.displayExpr;
-    this.currentValueExpr = this.valueExpr;
+  mounted() {
+    this.setWatchProps();
   }
 
-  @Watch("currentValue")
-  setItemValue(val: any) {
+  @Watch("value")
+  @Watch("dataSource")
+  setWatchProps() {
+    this.options.value = this.value;
+    this.options.dataSource = this.dataSource;
+    this.options.displayExpr = this.displayExpr ? this.displayExpr : "title";
+    this.options.valueExpr = this.valueExpr ? this.valueExpr : "id";
+  }
+
+  changeCheckd(val: any) {
+    this.options.value = val;
     this.$emit("input", val);
-  }
-
-  changeCheckd(val:any) {
-    this.currentValue = val;
-    
   }
 }
 </script>

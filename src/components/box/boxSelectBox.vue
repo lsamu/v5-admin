@@ -1,19 +1,15 @@
 <template>
-  <div class="layui-form-item layui-form-text">
-    <label class="layui-form-label" v-text="label"></label>
-    <div class="layui-input-block">
-      <div class="layui-unselect layui-form-select" :class="{'layui-form-selected':selectShow}">
-        <div class="layui-select-title">
-          <input type="text" placeholder="请选择" :value="currentText" readonly="" class="layui-input layui-unselect" @click="setChangeValue">
-          <i class="layui-edge"></i>
-        </div>
-        <dl class="layui-anim layui-anim-upbit" v-show="selectShow">
-          <dd :class="{'layui-this':currentValue==item[currentValueExpr]}" :lay-value="item[currentValueExpr]" v-for="item in options" :key="item.aaa" @click="setCurrentValue(item[currentValueExpr])">{{item[currentDisplayExpr]}}</dd>
-        </dl>
-      </div>
+  <div class="layui-unselect layui-form-select" :class="{'layui-form-selected':selectShow}">
+    <div class="layui-select-title">
+      <input type="text" :placeholder="options.placeholder" :value="options.text" readonly="" class="layui-input layui-unselect" v-on:click="setChangeValue">
+      <i class="layui-edge"></i>
     </div>
+    <dl class="layui-anim layui-anim-upbit" v-show="selectShow">
+      <dd v-for="item in options.dataSource" :key="item.id" @click="setCurrentValue(item[options.valueExpr])" 
+        :class="{'layui-this':options.value==item[options.valueExpr]}"
+      >{{item[options.displayExpr]}}</dd>
+    </dl>
   </div>
-  <!-- </div>-->
 </template>
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from "vue-property-decorator";
@@ -22,9 +18,9 @@ export default class Home extends Vue {
   @Prop()
   value!: string;
   @Prop()
-  label!: string;
+  placeholder!: string;
   @Prop()
-  options!: any[];
+  dataSource!: any[];
 
   @Prop()
   displayExpr!: string;
@@ -37,35 +33,51 @@ export default class Home extends Vue {
   currentDisplayExpr: string = "";
   currentValueExpr: string = "";
 
-  //是否显示
+  public options: any = {
+    value: 0,
+    text: "请选择",
+    placeholder: "",
+    dataSource: [],
+    displayExpr: "title",
+    valueExpr: "id"
+  };
   selectShow: boolean = false;
-
   async mounted() {
-    this.currentValue = this.value;
-    this.currentDisplayExpr = this.displayExpr;
-    this.currentValueExpr = this.valueExpr;
-    for (const item of this.options) {
-      if (item[this.currentValueExpr] == this.currentValue) {
-        this.currentText = item[this.currentDisplayExpr];
+    this.setWatchProp();
+  }
+  /**
+   * 属性
+   */
+  @Watch("value")
+  @Watch("text")
+  @Watch("placeholder")
+  @Watch("dataSource")
+  @Watch("displayExpr")
+  @Watch("valueExpr")
+  setWatchProp() {
+    this.options.value = this.value;
+    this.options.placeholder = this.placeholder;
+    this.options.dataSource = this.dataSource;
+    this.options.displayExpr = this.displayExpr ? this.displayExpr : "title";
+    this.options.valueExpr = this.valueExpr ? this.valueExpr : "id";
+
+    for (const item of this.options.dataSource) {
+      if (item[this.options.valueExpr] == this.options.value) {
+        this.options.text = item[this.options.displayExpr];
       }
     }
   }
-
-  @Watch("currentValue")
-  setItemValue(val: any) {
-    for (const item of this.options) {
-      if (item[this.currentValueExpr] == val) {
-        this.currentText = item[this.currentDisplayExpr];
-      }
-    }
-    this.$emit("input", val);
-  }
-
   /**
    * 设置当前选择
    */
   setCurrentValue(val: any) {
-    this.currentValue = val;
+    this.options.value = val;
+    for (const item of this.options.dataSource) {
+      if (item[this.options.valueExpr] == val) {
+        this.options.text = item[this.options.displayExpr];
+        this.$emit("input", val);
+      }
+    }
     this.setChangeValue();
   }
 

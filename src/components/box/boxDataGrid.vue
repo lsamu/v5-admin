@@ -1,57 +1,41 @@
 <template>
-    <div>
-        <table class="layui-hide" id="test"></table>
-        <script type="text/html" id="toolbarDemo">
-            <div class="layui-btn-container">
+  <div>
+    <table class="layui-hide" id="test"></table>
+    <script type="text/html" id="toolbarDemo">
+      <div class="layui-btn-container">
 				<button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加</button>
 				<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">刷新</button>
 				<button class="layui-btn layui-btn-sm" lay-event="isAll">批量设置</button>
 			</div>
 		</script>
-        <script type="text/html" id="barDemo">
-            <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <script type="text/html" id="barDemo">
+      <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
 			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 		</script>
-    </div>
+  </div>
 </template>
 <script lang="ts">
-import { Vue, Watch } from "vue-property-decorator";
-export default class MyDataGrid extends Vue {
-  cols = [];
-  data = [];
-  async mounted() {
-      await this.$nextTick(() => {
-      layui.use(["table", "form"], () => {
-        let table = layui.table;
+import { Component, Vue, Watch } from "vue-property-decorator";
 
-        table.render({
-          elem: "#test",
-          cellMinWidth: 80,
-          cols: [[
-      {field:'id', width:80, title: 'ID', sort: true}
-      ,{field:'username', width:80, title: '用户名'}
-      ,{field:'sex', width:80, title: '性别', sort: true}
-      ,{field:'city', width:80, title: '城市'}
-      ,{field:'sign', title: '签名', minWidth: 150}
-      ,{field:'experience', width:80, title: '积分', sort: true}
-      ,{field:'score', width:80, title: '评分', sort: true}
-      ,{field:'classify', width:80, title: '职业'}
-      ,{field:'wealth', width:135, title: '财富', sort: true}
-    ]],
-          data: this.data,
-          page: true,
-          toolbar: "#toolbarDemo",
-          totalRow: true,
-          height: "full-100"
-        });
-      });
-    });
+@Component({})
+export default class MyDataGrid extends Vue {
+  private options: any = null;
+
+  /**
+   * 挂载完毕执行
+   */
+  mounted() {
+    this.options = {
+      cols: [],
+      data: []
+    };
   }
 
-  //@Watch("cols")
-  @Watch("data")
+  /**
+   * 数据变化
+   */
+  @Watch("options")
   async watchDataGrid() {
-    console.log("1231");
     await this.$nextTick(() => {
       layui.use(["table", "form"], () => {
         let form = layui.form;
@@ -61,18 +45,8 @@ export default class MyDataGrid extends Vue {
         table.render({
           elem: "#test",
           cellMinWidth: 80,
-          cols: [[
-      {field:'id', width:80, title: 'ID', sort: true}
-      ,{field:'username', width:80, title: '用户名'}
-      ,{field:'sex', width:80, title: '性别', sort: true}
-      ,{field:'city', width:80, title: '城市'}
-      ,{field:'sign', title: '签名', minWidth: 150}
-      ,{field:'experience', width:80, title: '积分', sort: true}
-      ,{field:'score', width:80, title: '评分', sort: true}
-      ,{field:'classify', width:80, title: '职业'}
-      ,{field:'wealth', width:135, title: '财富', sort: true}
-    ]],
-          data: this.data,
+          cols: [this.options.cols],
+          data: this.options.data,
           page: true,
           toolbar: "#toolbarDemo",
           totalRow: true,
@@ -82,11 +56,12 @@ export default class MyDataGrid extends Vue {
     });
   }
 
-  public option(data: any) {
-    this.cols = data.cols;
-    this.data = data.data;
-    console.log(this.cols);
-    console.log(this.data);
+  /**
+   * 操作选项
+   */
+  public async option(data: any) {
+    Object.assign(this.options, data);
   }
+  
 }
 </script>

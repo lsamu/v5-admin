@@ -14,8 +14,16 @@ export default new Router({
       component: () => import('./views/datagrid.vue')
     },
     {
+      path: '/test_datagrid',
+      component: () => import('./views/test_datagrid.vue')
+    },
+    {
       path: '/form',
       component: () => import('./views/form.vue')
+    },
+    {
+      path: '/ele',
+      component: () => import('./views/ele.vue')
     }
   ]
 })

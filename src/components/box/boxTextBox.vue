@@ -1,38 +1,50 @@
 <template>
-  <div class="layui-form">
-    <div class="layui-form">
-      <div class="layui-form-item layui-form-text">
-        <label class="layui-form-label" v-text="label"></label>
-        <div class="layui-input-block">
-          <input type="text" lay-verify="title" autocomplete="off" class="layui-input" :placeholder="placeholder" v-model="currentValue" :class="areaClass">
-        </div>
-        </div>
-      </div>
-    </div>
+  <input type="text" lay-verify="title" autocomplete="off" class="layui-input" :placeholder="options.placeholder" v-model="options.value"/>
 </template>
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 
 @Component({})
 export default class Home extends Vue {
-  @Prop()
-  private value!: string;
-  @Prop()
-  private label!: string;
-  @Prop()
-  private placeholder!: string;
-  @Prop()
-  private areaClass!: string;
 
-  currentValue = "";
+  @Prop()
+  private p_option!: {};
+
+  options: any = {
+    value: "",
+    placeholder: ""
+  };
 
   mounted() {
-    this.currentValue = this.value;
+    this.setWatchProps();
   }
 
-  @Watch("currentValue")
-  public setCurrentValue(val: any) {
-    this.$emit("input", val);
+  /**
+   * 属性
+   */
+  @Watch("value")
+  @Watch("placeholder")
+  public setWatchProps() {
+    Object.assign(this.options, this.p_option);
+    this.setWatchOptions();
+  }
+
+  /**
+   * 选项
+   */
+  @Watch("options.value")
+  public setWatchOptions() {
+    this.$emit("input", this.options.value);
+  }
+
+
+
+  /**
+   * 配置
+   */
+  public option(data: any) {
+    Object.assign(this.options, data);
+    this.setWatchOptions();
   }
 }
 </script>
