@@ -24,10 +24,11 @@ export default class Home extends Vue {
   @Prop()
   private onValueChanged!: (val: string) => void;
 
-  mounted() {
-    this.setWatchProps();
-  }
-
+  options:any={
+    value:"",
+    placeholder:"",
+    onValueChanged:null
+  };
   /**
    * 属性
    */
@@ -35,9 +36,13 @@ export default class Home extends Vue {
   @Watch("placeholder")
   @Watch("onValueChanged")
   public setWatchProps() {
-    this.$emit("input", this.value);
-    if(this.onValueChanged){
-      this.onValueChanged(this.value);
+    this.options.value = this.value;
+    this.options.placeholder = this.placeholder;
+    this.options.onValueChanged = this.onValueChanged;
+
+    this.$emit("input", this.options.value);
+    if(this.options.onValueChanged){
+      this.options.onValueChanged(this.value);
     }
   }
 }

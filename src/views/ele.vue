@@ -5,8 +5,8 @@
       type:"normal",
       text:"搜索"
     }' ref="boxButtonKey"></boxButton>
-    <boxTextBox value="我是文本123456" placeholder="我是文本提示信息"  v-model="formData['title']"></boxTextBox>
-    <boxSelectBox :dataSource="[{title:'分类1',id:1},{title:'分类2',id:2}]" value="1" v-model="formData['classid']"></boxSelectBox>
+    <boxTextBox value="我是文本123456" placeholder="我是文本提示信息" v-model="formData['title']"></boxTextBox>
+    <boxSelectBox :dataSource="[{title:'分类1',id:1},{title:'分类2',id:2}]" value="1" placeholder="请选择一个分类" v-model="formData['classid']"></boxSelectBox>
     <boxCheckBox :dataSource="[{title:'分类1',id:1},{title:'分类2',id:2}]" value="1" v-model="formData['classids']"></boxCheckBox>
   </div>
 </template>
@@ -27,7 +27,7 @@ import { ui } from "@/components/ui";
   }
 })
 export default class Home extends Vue {
-  formData:any={};
+  formData: any = {};
   boxButtonKey = "boxButtonKey";
   mounted() {
     // let btn = this.$refs[this.boxButtonKey] as any;
