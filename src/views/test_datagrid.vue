@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import mydatagrid from "@/components/box/boxDataGrid.vue";
+import mydatagrid from "@/components/boxDataGrid.vue";
 
 @Component({
   components: {

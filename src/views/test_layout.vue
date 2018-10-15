@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import dxlayout from '@/components/layout.vue';
+import dxlayout from '@/components/boxLayout.vue';
 
 @Component({
   components: {

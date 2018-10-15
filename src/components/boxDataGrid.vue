@@ -1,5 +1,43 @@
 <template>
   <div>
+    <div class="layui-form-query">
+			<form class="layui-form" id="query_form">
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-mid">功能号：</label>
+						<div class="layui-input-inline" style="width: 100px;">
+							<input type="text" name="funcNo" autocomplete="off" class="layui-input" />
+						</div>
+						</div>
+						<div class="layui-inline">
+							<label class="layui-form-mid">名称：</label>
+							<div class="layui-input-inline" style="width: 150px;">
+								<input type="text" name="funcName" autocomplete="off" class="layui-input" />
+						</div>
+							</div>
+							<div class="layui-inline">
+								<label class="layui-form-mid">类型：</label>
+								<div class="layui-input-inline" style="width: 150px;">
+									<select name="funcType" lay-verify="required">
+										<option value="">--请选择--</option>
+										<option value="c">功能号实现类</option>
+										<option value="s">service实现类</option>
+										<option value="m">mapper实现类</option>
+									</select>
+								</div>
+							</div>
+							<div class="layui-inline">
+								<div class="layui-input-inline">
+									<button class="layui-btn" type="button" function="query">
+										<i class="layui-icon">&#xe615;</i>查询</button>
+								</div>
+							</div>
+						</div>
+			</form>
+		</div>
+    <div class="">
+        单个字段查询
+    </div>
     <table class="layui-hide" id="test"></table>
     <script type="text/html" id="toolbarDemo">
       <div class="layui-btn-container">
