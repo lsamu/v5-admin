@@ -1,42 +1,73 @@
 <template>
   <div>
+    <div class="x-nav">
+      <span class="layui-breadcrumb" style="visibility: visible;">
+        <a href="">首页</a>
+        <span lay-separator="">/</span>
+        <a href="">演示</a>
+        <span lay-separator="">/</span>
+        <a>
+          <cite>导航元素</cite>
+        </a>
+      </span>
+    </div>
     <div class="layui-form-query">
-			<form class="layui-form" id="query_form">
-				<div class="layui-form-item">
-					<div class="layui-inline">
-						<label class="layui-form-mid">功能号：</label>
-						<div class="layui-input-inline" style="width: 100px;">
-							<input type="text" name="funcNo" autocomplete="off" class="layui-input" />
-						</div>
-						</div>
-						<div class="layui-inline">
-							<label class="layui-form-mid">名称：</label>
-							<div class="layui-input-inline" style="width: 150px;">
-								<input type="text" name="funcName" autocomplete="off" class="layui-input" />
-						</div>
-							</div>
-							<div class="layui-inline">
-								<label class="layui-form-mid">类型：</label>
-								<div class="layui-input-inline" style="width: 150px;">
-									<select name="funcType" lay-verify="required">
-										<option value="">--请选择--</option>
-										<option value="c">功能号实现类</option>
-										<option value="s">service实现类</option>
-										<option value="m">mapper实现类</option>
-									</select>
-								</div>
-							</div>
-							<div class="layui-inline">
-								<div class="layui-input-inline">
-									<button class="layui-btn" type="button" function="query">
-										<i class="layui-icon">&#xe615;</i>查询</button>
-								</div>
-							</div>
-						</div>
-			</form>
-		</div>
-    <div class="">
-        单个字段查询
+      <form class="layui-form" id="query_form">
+        <div class="layui-form-item">
+          <div class="layui-inline">
+            <label class="layui-form-mid">类型：</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <select name="funcType" lay-verify="required">
+                <option value="">--请选择--</option>
+                <option value="c">功能号实现类</option>
+                <option value="s">service实现类</option>
+                <option value="m">mapper实现类</option>
+              </select>
+            </div>
+          </div>
+          <div class="layui-inline">
+            <label class="layui-form-mid">名称：</label>
+            <div class="layui-input-inline" style="width: 150px;">
+              <input type="text" name="funcName" autocomplete="off" class="layui-input" />
+            </div>
+          </div>
+
+          <div class="layui-inline">
+            <div class="layui-input-inline">
+              <button class="layui-btn" type="button" function="query">
+                <i class="layui-icon">&#xe615;</i>搜索</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="layui-form-query-single">
+      <form class="layui-form">
+        <div class="layui-form-item">
+          <label class="layui-form-mid">筛选：</label>
+          <div class="layui-input-inline" style="width: 150px;">
+            <select name="funcType" lay-verify="required">
+              <option value="c">编号</option>
+              <option value="s">标题</option>
+            </select>
+          </div>
+          <div class="layui-input-inline" style="width: 150px;">
+            <select name="funcType" lay-verify="required">
+              <option value="">包含</option>
+              <option value="c">等于</option>
+            </select>
+          </div>
+          <div class="layui-input-inline" style="width: 150px;">
+            <input type="text" name="funcName" autocomplete="off" class="layui-input" />
+          </div>
+          <div class="layui-inline">
+            <div class="layui-input-inline">
+              <button class="layui-btn" type="button" function="query">
+                <i class="layui-icon">&#xe615;</i>过滤</button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
     <table class="layui-hide" id="test"></table>
     <script type="text/html" id="toolbarDemo">
@@ -100,6 +131,5 @@ export default class MyDataGrid extends Vue {
   public async option(data: any) {
     Object.assign(this.options, data);
   }
-  
 }
 </script>

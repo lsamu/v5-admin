@@ -1,5 +1,16 @@
 <template>
   <div>
+    <div class="x-nav">
+      <span class="layui-breadcrumb" style="visibility: visible;">
+        <a href="">首页</a>
+        <span lay-separator="">/</span>
+        <a href="">演示</a>
+        <span lay-separator="">/</span>
+        <a>
+          <cite>导航元素</cite>
+        </a>
+      </span>
+    </div>
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
       <legend>表单集合演示</legend>
     </fieldset>
@@ -30,7 +41,7 @@
           <input type="text" :name="item.dataField" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input box-date" v-if="item.editorType&&item.editorType=='boxDateBox'" v-model="formData[item.dataField]" />
           <!--模板-->
           <div v-if="item.editorType&&item.editorType=='boxTemplate'" :id="item.dataField" class="box-template" :data="item.dataField">
-              <!-- {{item.template({
+            <!-- {{item.template({
                   component: this,
                   dataField: item.dataField,
                   editorOptions: item.editorOptions,
@@ -38,11 +49,17 @@
               })}} -->
           </div>
           <!-- 百度编辑器 -->
-          <textarea 
-              v-if="item.editorType&&item.editorType=='boxUEditor'" 
-              v-model="formData[item.dataField]"
-          ></textarea>
+          <textarea v-if="item.editorType&&item.editorType=='boxUEditor'" v-model="formData[item.dataField]"></textarea>
+          <!-- 上传图片 -->
+          <input type="text" lay-verify="title" autocomplete="off" class="layui-input" :name="item.dataField" :placeholder="item.editorOptions.placeholder" v-model="formData[item.dataField]" v-if="item.editorType=='boxUploadBox'" />
         </div>
+        <!-- <div class="layui-form-item">
+          <label class="layui-form-label">自定义验证</label>
+          <div class="layui-input-inline">
+            <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
+          </div>
+          <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
+        </div> -->
       </div>
       <div class="layui-form-item">
         <div class="layui-input-block">
@@ -78,7 +95,9 @@ export default class TestForm extends Vue {
         let index = layedit.build("box-editor");
         window.setInterval(() => {
           let content = layui.layedit.getContent(index);
-          this.formData["content"] = content;
+          if (content) {
+            this.formData["content"] = content;
+          }
         }, 500);
         //下拉分类
         form.on("select", (data: any) => {
@@ -93,7 +112,7 @@ export default class TestForm extends Vue {
           this.formData[data.elem.name] = data.value;
         });
         //单选框
-        form.on('switch', (data: any) => {
+        form.on("switch", (data: any) => {
           let c = data.elem.checked;
           if (c) {
             this.formData[data.elem.name] = 1;
@@ -113,11 +132,14 @@ export default class TestForm extends Vue {
     });
   }
 
+  @Watch("formData")
+  public layeditUpdate() {
+    console.log(this.formData);
+  }
   /**
    *初始化选项
    */
   public option(data: { formData: object; items: any[] }) {
-    console.log(data);
     this.formData = data.formData;
     this.items = data.items;
   }

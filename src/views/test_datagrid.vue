@@ -32,7 +32,7 @@ export default class Home extends Vue {
         joinTime: "2016-10-14"
       });
     }
-
+    
     datagrid.option({
       cols: [
         //{ type: "radio", fixed: "left" },
