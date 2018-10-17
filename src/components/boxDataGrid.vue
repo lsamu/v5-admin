@@ -2,9 +2,7 @@
   <div>
     <div class="x-nav">
       <span class="layui-breadcrumb" style="visibility: visible;">
-        <a href="">首页</a>
-        <span lay-separator="">/</span>
-        <a href="">演示</a>
+        <a href="/#/admin/index">首页</a>
         <span lay-separator="">/</span>
         <a>
           <cite>导航元素</cite>

@@ -2,9 +2,7 @@
   <div>
     <div class="x-nav">
       <span class="layui-breadcrumb" style="visibility: visible;">
-        <a href="">首页</a>
-        <span lay-separator="">/</span>
-        <a href="">演示</a>
+        <a href="/#/admin/index">首页</a>
         <span lay-separator="">/</span>
         <a>
           <cite>导航元素</cite>
@@ -14,9 +12,8 @@
     <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
       <legend>表单集合演示</legend>
     </fieldset>
-    {{formData}}
     <form class="layui-form">
-      <div class="layui-form-item" v-for="(item, index) in items">
+      <div class="layui-form-item" v-for="(item, index) in items" :key="item.id">
         <label class="layui-form-label" v-if="item.label">{{item.label.text}}：</label>
         <div class="layui-input-block" v-if="item.editorOptions&&item.editorOptions.placeholder">
           <!-- 显示文本 -->
@@ -29,12 +26,12 @@
           <textarea class="layui-textarea layui-hide" id="box-editor" lay-verify="content" :name="item.dataField" v-model="formData[item.dataField]" v-if="item.editorType&&item.editorType=='boxTextEditor'"></textarea>
           <!-- 下拉列表 -->
           <select lay-filter="aihao" :name="item.dataField" v-if="item.editorType&&item.editorType=='boxSelectBox'" v-model="formData[item.dataField]">
-            <option :value="select_item[item.editorOptions.valueExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource">{{select_item[item.editorOptions.displayExpr]}}</option>
+            <option :value="select_item[item.editorOptions.valueExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" :key="select_item.id">{{select_item[item.editorOptions.displayExpr]}}</option>
           </select>
           <!-- 单选框 -->
-          <input type="radio" checked="" :value="select_item[item.editorOptions.valueExpr]" :title="select_item[item.editorOptions.displayExpr]" :name="item.dataField" v-if="item.editorType&&item.editorType=='boxRadioBox'" v-for="(select_item,select_index) in item.editorOptions.dataSource" v-model="formData[item.dataField]" />
+          <input type="radio" checked="" :value="select_item[item.editorOptions.valueExpr]" :title="select_item[item.editorOptions.displayExpr]" :name="item.dataField" v-if="item.editorType&&item.editorType=='boxRadioBox'" v-for="(select_item,select_index) in item.editorOptions.dataSource" :key="select_item.id" v-model="formData[item.dataField]" />
           <!-- 复选框 -->
-          <input type="checkbox" v-if="item.editorType&&item.editorType=='boxCheckListBox'" :name="item.dataField[select_item[item.editorOptions.valueExpr]]" :title="select_item[item.editorOptions.displayExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" v-model="formData[item.dataField]" />
+          <input type="checkbox" v-if="item.editorType&&item.editorType=='boxCheckListBox'" :name="item.dataField[select_item[item.editorOptions.valueExpr]]" :title="select_item[item.editorOptions.displayExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" :key="select_item.id" v-model="formData[item.dataField]" />
           <!-- 开关 -->
           <input type="checkbox" :name="item.dataField" lay-skin="switch" lay-text="ON|OFF" v-if="item.editorType&&item.editorType=='boxSwitch'" v-model="formData[item.dataField]">
           <!-- 日期 -->
@@ -63,7 +60,7 @@
       </div>
       <div class="layui-form-item">
         <div class="layui-input-block">
-          <button class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+          <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1" @click="onSubmitHandler">立即提交</button>
           <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
       </div>
@@ -77,14 +74,15 @@ import { Vue, Component, Watch } from "vue-property-decorator";
 export default class TestForm extends Vue {
   public formData: any = {};
   public items: any[] = [];
-
   /**
    * 挂载完毕后执行
    */
-  private mounted() {}
+  private mounted() {
+
+  }
 
   @Watch("items")
-  public async itemsUpdate(oldVal: any, newVal: any) {
+  public async itemsUpdate() {
     await this.$nextTick(() => {
       layui.use(["form", "layedit", "laydate"], () => {
         let form = layui.form,
@@ -109,6 +107,7 @@ export default class TestForm extends Vue {
         });
         //选择列表
         form.on("checkbox", (data: any) => {
+          console.log(data);
           this.formData[data.elem.name] = data.value;
         });
         //单选框
@@ -121,27 +120,33 @@ export default class TestForm extends Vue {
           }
         });
         form.render();
-        //日期
-        laydate.render({
-          elem: ".box-date",
-          done: (value: any, date: any, endDate: any) => {
-            console.log(value, date, endDate);
-          }
-        });
+
+        //日期选择框
+        let bb = document.getElementsByClassName("box-date");
+        for (let b of bb) {
+          laydate.render({
+            elem: b,
+            done: (value: any, date: any, endDate: any) => {
+              let name = (b as any).name;
+              this.formData[name] = value;
+            }
+          });
+        }
       });
     });
+    //
   }
 
-  @Watch("formData")
-  public layeditUpdate() {
-    console.log(this.formData);
-  }
   /**
    *初始化选项
    */
   public option(data: { formData: object; items: any[] }) {
     this.formData = data.formData;
     this.items = data.items;
+  }
+
+  public onSubmitHandler(sender:any){
+      console.log(this.formData);
   }
 }
 </script>

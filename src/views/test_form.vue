@@ -133,6 +133,17 @@ export default class TestForm extends Vue {
         placeholder: "请选择日期"
       }
     });
+    //状态
+    this.items.push({
+      dataField: "switch",
+      label: {
+        text: "状态"
+      },
+      editorType: "boxSwitch",
+      editorOptions: {
+        placeholder: "请选择状态"
+      }
+    });
     form.option({
       formData: {},
       items: this.items
