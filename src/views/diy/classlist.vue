@@ -20,7 +20,7 @@ export default class User extends BaseVue {
       this.boxDataGridKey
     );
     grid.option({
-      title: "文件管理"
+      title: "单页图文分类"
     });
   }
 }

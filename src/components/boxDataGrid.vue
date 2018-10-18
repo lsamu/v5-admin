@@ -5,7 +5,11 @@
         <a href="/#/admin/index">首页</a>
         <span lay-separator="">/</span>
         <a>
-          <cite>导航元素</cite>
+          <cite>{{options.title}}</cite>
+        </a>
+        <span lay-separator="">/</span>
+        <a>
+          <cite>列表</cite>
         </a>
       </span>
     </div>
@@ -82,19 +86,22 @@
   </div>
 </template>
 <script lang="ts">
-import { Component, Vue, Watch } from "vue-property-decorator";
+import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 
 @Component({})
 export default class MyDataGrid extends Vue {
-  private options: any = null;
+  @Prop()
+  title!: string;
 
+  private options: any = {};
   /**
    * 挂载完毕执行
    */
   mounted() {
     this.options = {
       cols: [],
-      data: []
+      data: [],
+      title: this.title ? this.title : "列表测试"
     };
   }
 

@@ -38,10 +38,10 @@
                 <dd><a href="">超链接</a></dd>
               </dl>
             </li> -->
-            <li class="layui-nav-item" v-for="(item, index) in items" :key="item.id">
-              <a :href='"/#"+item.route'>{{item.name}}</a>
-              <dl class="layui-nav-child" v-for="(item_child, index_child) in item.items" v-if="item.items" :key="item_child.id">
-                <dd><a :href='"/#"+item.route'>{{item_child.name}}</a></dd>
+            <li class="layui-nav-item layui-nav-itemed" v-for="(item, index) in items" :key="item.id">
+              <a href="javascript:void(0)">{{item.name}}</a>
+              <dl class="layui-nav-child" v-if="item.items">
+                <dd v-for="(item_child, index_child) in item.items"  :key="item_child.id"><a :href='"/#"+item_child.href'>{{item_child.name}}</a></dd>
               </dl>
             </li>
           </ul>
@@ -66,6 +66,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { menuUtil } from '@/common/menuUtil';
 
 @Component({
   components: {}
@@ -78,20 +79,7 @@ export default class Home extends Vue {
       var element = layui.element;
     });
 
-    this.items = [
-      { route: "/admin/index", name: "首页" },
-      { route: "/admin/user", name: "用户管理" },
-      {
-        route: "/admin/config",
-        name: "系统管理",
-        items: [
-          {
-            route: "/admin/config",
-            name: "系统管理"
-          }
-        ]
-      }
-    ];
+    this.items = menuUtil.getAllMenuList();
   }
   public option() {}
 }

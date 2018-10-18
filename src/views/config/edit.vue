@@ -1,26 +1,27 @@
 <template>
-    <div>
-        <boxDataGrid :ref="boxDataGridKey"></boxDataGrid>
+     <div>
+        <boxForm :ref="boxFormKey"></boxForm>
     </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
-import boxDataGrid from "@/components/boxDataGrid.vue";
+import boxForm from "@/components/boxForm.vue";
 import BaseVue from '../../common/BaseVue';
 import BoxExpress from '@/box.all';
 
 @Component({
   components: {
-    boxDataGrid
+    boxForm
   }
 })
 export default class User extends BaseVue {
   mounted() {
-    let grid = this.getInstanceByKey<BoxExpress.ui.boxDataGrid>(
-      this.boxDataGridKey
+      let form = this.getInstanceByKey<BoxExpress.ui.boxForm>(
+      this.boxFormKey
     );
-    grid.option({
-      title: "文件管理"
+    console.log(form);
+    form.option({
+      title: "系统配置"
     });
   }
 }

@@ -16,11 +16,11 @@ import BoxExpress from '@/box.all';
 })
 export default class User extends BaseVue {
   mounted() {
-    let grid = this.getInstanceByKey<BoxExpress.ui.boxDataGrid>(
+     let grid = this.getInstanceByKey<BoxExpress.ui.boxDataGrid>(
       this.boxDataGridKey
     );
     grid.option({
-      title: "文件管理"
+      title: "用户角色"
     });
   }
 }

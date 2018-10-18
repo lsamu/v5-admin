@@ -87,7 +87,7 @@ export default class TestForm extends Vue {
         placeholder: "请选择性别",
         dataSource: [
           {
-            classid: 1,
+            id: 1,
             name: "男"
           },
           {
@@ -110,7 +110,7 @@ export default class TestForm extends Vue {
         placeholder: "请选择标签",
         dataSource: [
           {
-            classid: 1,
+            id: 1,
             name: "Unity3D"
           },
           {

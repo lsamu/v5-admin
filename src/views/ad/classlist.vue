@@ -1,13 +1,13 @@
 <template>
-    <div>
-        <boxDataGrid :ref="boxDataGridKey"></boxDataGrid>
-    </div>
+  <div>
+    <boxDataGrid :ref="boxDataGridKey"></boxDataGrid>
+  </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 import boxDataGrid from "@/components/boxDataGrid.vue";
-import BaseVue from '../../common/BaseVue';
-import BoxExpress from '@/box.all';
+import BaseVue from "../../common/BaseVue";
+import BoxExpress from "@/box.all";
 
 @Component({
   components: {
@@ -20,7 +20,7 @@ export default class User extends BaseVue {
       this.boxDataGridKey
     );
     grid.option({
-      title: "文件管理"
+      title: "图片轮播分类"
     });
   }
 }
