@@ -50,7 +50,7 @@
 
       <div class="layui-body">
         <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
+        <div style="padding:0 15px 0 15px;">
           <keep-alive>
             <router-view></router-view>
           </keep-alive>

@@ -23,7 +23,7 @@ declare module BoxExpress.ui {
     export interface boxFormOptions {
 
     }
-
+    
     export interface boxFormOptions {
         /**
          * 标题

@@ -10,7 +10,7 @@ export default class BaseVue extends Vue {
      * @param key 
      */
     protected getInstanceByKey<T>(key:string){
-        let instance = (this.$refs[this.boxDataGridKey] as any) as T;
+        let instance = (this.$refs[key] as any) as T;
         return instance;
     }
 }

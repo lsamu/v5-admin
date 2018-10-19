@@ -1,19 +1,13 @@
 <template>
   <div>
-    <div class="x-nav">
-      <span class="layui-breadcrumb" style="visibility: visible;">
-        <a href="/#/admin/index">首页</a>
-        <span lay-separator="">/</span>
-        <a>
-          <cite>{{options.title}}</cite>
-        </a>
-        <span lay-separator="">/</span>
-        <a>
-          <cite>列表</cite>
-        </a>
-      </span>
+    <div class="layui-card box-admin-header">
+      <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
+        <a lay-href="/#/admin/index">主页</a><span lay-separator="">/</span>
+        <a><cite>{{options.title}}</cite></a><span lay-separator="">/</span>
+        <a><cite>列表</cite></a>
+      </div>
     </div>
-    <div class="layui-form-query">
+    <div class="box-form-query">
       <form class="layui-form" id="query_form">
         <div class="layui-form-item">
           <div class="layui-inline">
@@ -43,7 +37,7 @@
         </div>
       </form>
     </div>
-    <div class="layui-form-query-single">
+    <div class="box-form-query-single">
       <form class="layui-form">
         <div class="layui-form-item">
           <label class="layui-form-mid">筛选：</label>
@@ -87,6 +81,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from "vue-property-decorator";
+import $ from "jquery";
 
 @Component({})
 export default class MyDataGrid extends Vue {
@@ -116,6 +111,12 @@ export default class MyDataGrid extends Vue {
         let table = layui.table;
         form.render();
 
+        let height_1 =
+          $(".box-admin-header").height() +
+          $(".box-form-query").height() +
+          $(".box-form-query-single").height();
+
+        let height = "full-" + (Math.round(height_1) + 155);
         table.render({
           elem: "#test",
           cellMinWidth: 80,
@@ -124,7 +125,7 @@ export default class MyDataGrid extends Vue {
           page: true,
           toolbar: "#toolbarDemo",
           totalRow: true,
-          height: "full-100"
+          height: height
         });
       });
     });
@@ -138,3 +139,14 @@ export default class MyDataGrid extends Vue {
   }
 }
 </script>
+<style lang="less" scoped>
+.box-admin-header {
+  line-height: 50px;
+  margin-bottom: 0;
+  border-radius: 0;
+}
+.box-form-query {
+  margin: 10px 0 0 0;
+}
+</style>
+

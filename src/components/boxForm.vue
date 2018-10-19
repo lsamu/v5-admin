@@ -1,74 +1,70 @@
 <template>
   <div>
-    <div class="x-nav">
-      <span class="layui-breadcrumb" style="visibility: visible;">
-        <a href="/#/admin/index">首页</a>
-        <span lay-separator="">/</span>
-        <a>
-          <cite>{{options.title}}</cite>
-        </a>
-        <span lay-separator="">/</span>
-        <a>
-          <cite>表单</cite>
-        </a>
-      </span>
+    <div class="layui-card box-admin-header">
+      <div class="layui-breadcrumb" lay-filter="breadcrumb" style="visibility: visible;">
+        <a lay-href="/#/admin/index">主页</a><span lay-separator="">/</span>
+        <a><cite>{{options.title}}</cite></a><span lay-separator="">/</span>
+        <a><cite>表单</cite></a>
+      </div>
     </div>
-    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-      <legend>{{options.title}}</legend>
-    </fieldset>
-    <form class="layui-form">
-      <div class="layui-form-item" v-for="(item, index) in items" :key="item.id">
-        <label class="layui-form-label" v-if="item.label">{{item.label.text}}：</label>
-        <div class="layui-input-block" v-if="item.editorOptions&&item.editorOptions.placeholder">
-          <!-- 显示文本 -->
-          <label v-if="item.editorType&&item.editorType=='boxLabel'"></label>
-          <!-- 普通文本 -->
-          <input v-if="!item.editorType||item.editorType=='boxTextBox'" type="text" :name="item.dataField" lay-verify="title" autocomplete="off" class="layui-input" :placeholder="item.editorOptions.placeholder" v-model="formData[item.dataField]" />
-          <!-- 文本区域 -->
-          <textarea v-if="item.editorType&&item.editorType=='boxTextArea'" :name="item.dataField" :placeholder="item.editorOptions.placeholder" class="layui-textarea" v-model="formData[item.dataField]"></textarea>
-          <!-- 编辑器 -->
-          <textarea v-if="item.editorType&&item.editorType=='boxTextEditor'" :name="item.dataField" class="layui-textarea layui-hide" id="box-editor" lay-verify="content" v-model="formData[item.dataField]"></textarea>
-          <!-- 下拉列表 -->
-          <select v-if="item.editorType&&item.editorType=='boxSelectBox'" :name="item.dataField" lay-filter="aihao" v-model="formData[item.dataField]">
-            <option :value="select_item[item.editorOptions.valueExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" :key="select_item.id">{{select_item[item.editorOptions.displayExpr]}}</option>
-          </select>
-          <!-- 单选框 -->
-          <input v-if="item.editorType&&item.editorType=='boxRadioBox'" type="radio" :name="item.dataField" checked="" :value="select_item[item.editorOptions.valueExpr]" :title="select_item[item.editorOptions.displayExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" :key="select_item.id" v-model="formData[item.dataField]" />
-          <!-- 复选框 -->
-          <input v-if="item.editorType&&item.editorType=='boxCheckListBox'" type="checkbox" :name="item.dataField" :title="select_item[item.editorOptions.displayExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" :key="select_item.id" v-model="formData[item.dataField]" :value="select_item[item.editorOptions.valueExpr]" />
-          <!-- 开关 -->
-          <input v-if="item.editorType&&item.editorType=='boxSwitch'" type="checkbox" :name="item.dataField" lay-skin="switch" lay-text="ON|OFF" v-model="formData[item.dataField]">
-          <!-- 日期 -->
-          <input v-if="item.editorType&&item.editorType=='boxDateBox'" type="text" :name="item.dataField" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input box-date" v-model="formData[item.dataField]" />
-          <!--模板-->
-          <div v-if="item.editorType&&item.editorType=='boxTemplate'" :name="item.dataField" class="box-template" :data="item.dataField">
-            <!-- {{item.template({
+    <div class="layui-card">
+      <div class="layui-card-header">{{options.title}}</div>
+      <div class="layui-card-body" pad15>
+        <form class="layui-form">
+          <div class="layui-form-item" v-for="(item, index) in items" :key="item.id">
+            <label class="layui-form-label" v-if="item.label">{{item.label.text}}：</label>
+            <div class="layui-input-block" v-if="item.editorOptions&&item.editorOptions.placeholder">
+              <!-- 显示文本 -->
+              <label v-if="item.editorType&&item.editorType=='boxLabel'"></label>
+              <!-- 普通文本 -->
+              <input v-if="!item.editorType||item.editorType=='boxTextBox'" type="text" :name="item.dataField" lay-verify="title" autocomplete="off" class="layui-input" :placeholder="item.editorOptions.placeholder" v-model="formData[item.dataField]" />
+              <!-- 文本区域 -->
+              <textarea v-if="item.editorType&&item.editorType=='boxTextArea'" :name="item.dataField" :placeholder="item.editorOptions.placeholder" class="layui-textarea" v-model="formData[item.dataField]"></textarea>
+              <!-- 编辑器 -->
+              <textarea v-if="item.editorType&&item.editorType=='boxTextEditor'" :name="item.dataField" class="layui-textarea layui-hide" id="box-editor" lay-verify="content" v-model="formData[item.dataField]"></textarea>
+              <!-- 下拉列表 -->
+              <select v-if="item.editorType&&item.editorType=='boxSelectBox'" :name="item.dataField" lay-filter="aihao" v-model="formData[item.dataField]">
+                <option :value="select_item[item.editorOptions.valueExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" :key="select_item.id">{{select_item[item.editorOptions.displayExpr]}}</option>
+              </select>
+              <!-- 单选框 -->
+              <input v-if="item.editorType&&item.editorType=='boxRadioBox'" type="radio" :name="item.dataField" checked="" :value="select_item[item.editorOptions.valueExpr]" :title="select_item[item.editorOptions.displayExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" :key="select_item.id" v-model="formData[item.dataField]" />
+              <!-- 复选框 -->
+              <input v-if="item.editorType&&item.editorType=='boxCheckListBox'" type="checkbox" :name="item.dataField" :title="select_item[item.editorOptions.displayExpr]" v-for="(select_item,select_index) in item.editorOptions.dataSource" :key="select_item.id" v-model="formData[item.dataField]" :value="select_item[item.editorOptions.valueExpr]" />
+              <!-- 开关 -->
+              <input v-if="item.editorType&&item.editorType=='boxSwitch'" type="checkbox" :name="item.dataField" lay-skin="switch" lay-text="ON|OFF" v-model="formData[item.dataField]">
+              <!-- 日期 -->
+              <input v-if="item.editorType&&item.editorType=='boxDateBox'" type="text" :name="item.dataField" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input box-date" v-model="formData[item.dataField]" />
+              <!--模板-->
+              <div v-if="item.editorType&&item.editorType=='boxTemplate'" :name="item.dataField" class="box-template" :data="item.dataField">
+                <!-- {{item.template({
                   component: this,
                   dataField: item.dataField,
                   editorOptions: item.editorOptions,
                   editorType: item.editorType
               })}} -->
-          </div>
-          <!-- 百度编辑器 -->
-          <textarea v-if="item.editorType&&item.editorType=='boxUEditor'" v-model="formData[item.dataField]"></textarea>
-          <!-- 上传图片 -->
-          <input v-if="item.editorType=='boxUploadBox'" type="text" :name="item.dataField" lay-verify="title" autocomplete="off" class="layui-input" :placeholder="item.editorOptions.placeholder" v-model="formData[item.dataField]" />
-        </div>
-        <!-- <div class="layui-form-item">
+              </div>
+              <!-- 百度编辑器 -->
+              <textarea v-if="item.editorType&&item.editorType=='boxUEditor'" v-model="formData[item.dataField]"></textarea>
+              <!-- 上传图片 -->
+              <input v-if="item.editorType=='boxUploadBox'" type="text" :name="item.dataField" lay-verify="title" autocomplete="off" class="layui-input" :placeholder="item.editorOptions.placeholder" v-model="formData[item.dataField]" />
+            </div>
+            <!-- <div class="layui-form-item">
           <label class="layui-form-label">自定义验证</label>
           <div class="layui-input-inline">
             <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
           </div>
           <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
         </div> -->
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-input-block">
+              <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1" @click="onSubmitHandler">立即提交</button>
+              <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="layui-form-item">
-        <div class="layui-input-block">
-          <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1" @click="onSubmitHandler">立即提交</button>
-          <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-        </div>
-      </div>
-    </form>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -154,6 +150,7 @@ export default class boxForm extends Vue {
    *初始化选项
    */
   public async option(data: any) {
+    console.log(data);
     this.formData = data.formData;
     this.items = data.items;
   }
@@ -163,3 +160,10 @@ export default class boxForm extends Vue {
   }
 }
 </script>
+<style lang="less" scoped>
+.box-admin-header {
+  line-height: 50px;
+  margin-bottom: 0;
+  border-radius: 0;
+}
+</style>
