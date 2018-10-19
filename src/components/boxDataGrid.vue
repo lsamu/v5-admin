@@ -84,7 +84,7 @@ import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 import $ from "jquery";
 
 @Component({})
-export default class MyDataGrid extends Vue {
+export default class boxDataGrid extends Vue {
   @Prop()
   title!: string;
 

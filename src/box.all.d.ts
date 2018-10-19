@@ -1,15 +1,21 @@
 declare global {
 
 }
+/**
+ *
+ *
+ * @export
+ * @class Component
+ */
 export class Component {
 
 }
 
-declare module BoxExpress {
+declare namespace BoxExpress {
 
 }
 
-declare module BoxExpress.ui {
+declare namespace BoxExpress.ui {
     export interface boxDataGridOptions {
         /**
          * 标题
@@ -31,6 +37,13 @@ declare module BoxExpress.ui {
         title?: string;
     }
 
+    /**
+     *
+     *
+     * @export
+     * @class boxForm
+     * @extends {Component}
+     */
     export class boxForm extends Component {
         option(config?: boxFormOptions);
     }
