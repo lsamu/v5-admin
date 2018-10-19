@@ -1,4 +1,4 @@
-export class menuUtil {
+export class MenuUtil {
 
     public static getAllMenuList() {
         let items = [

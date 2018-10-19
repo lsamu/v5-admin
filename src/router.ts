@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import { menuUtil } from './common/menuUtil';
-import aa from '@/views/article/list.vue';
+import { MenuUtil } from './common/MenuUtil';
 
 Vue.use(Router)
 //
@@ -14,7 +13,7 @@ let resolved = id => () => require(id);
 // }
 
 let router = [];
-for (const item of menuUtil.getAllMenuList()) {
+for (const item of MenuUtil.getAllMenuList()) {
   if (item.items && item.items.length > 0) {
     for (const item2 of item.items) {
       //let aa = import(item2.component);

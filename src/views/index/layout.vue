@@ -66,7 +66,7 @@
 </template>
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import { menuUtil } from '@/common/menuUtil';
+import { MenuUtil } from '@/common/MenuUtil';
 
 @Component({
   components: {}
@@ -79,7 +79,7 @@ export default class Home extends Vue {
       var element = layui.element;
     });
 
-    this.items = menuUtil.getAllMenuList();
+    this.items = MenuUtil.getAllMenuList();
   }
   public option() {}
 }
