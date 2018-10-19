@@ -1,15 +1,48 @@
+
+/**
+ *返回基本信息
+ *
+ * @export
+ * @interface BaseResult
+ */
+export interface BaseResult {
+    code?: number;
+    msg?: string;
+}
+
+/**
+ *返回基本模型
+ *
+ * @export
+ * @interface BaseModel
+ * @template T
+ */
 export interface BaseModel<T> {
     code?: number;
     msg?: string;
     data?: T
 }
 
+/**
+ *返回列表模型
+ *
+ * @export
+ * @interface BaseArray
+ * @template T
+ */
 export interface BaseArray<T> {
     code?: number;
     msg?: string;
     data?: T[]
 }
 
+/**
+ *返回分页模型
+ *
+ * @export
+ * @interface BasePager
+ * @template T
+ */
 export interface BasePager<T> {
     code?: number;
     msg?: string;
@@ -21,13 +54,3 @@ export interface BasePager<T> {
         list: T[]
     }
 }
-
-export interface adminModel {
-    id?: number;
-    title?: string;
-}
-
-let aa: BaseModel<adminModel>;
-let bb: BaseArray<adminModel>;
-let cc: BasePager<adminModel>;
-let dd:BaseModel<any>;

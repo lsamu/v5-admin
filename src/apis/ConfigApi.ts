@@ -1,13 +1,13 @@
 import { AxiosUtil } from '../utils/AxiosUtil';
 import { BaseResult, BaseModel, BaseArray, BasePager } from '../models/BaseModel';
-import { AdminModel } from '../models/AdminModel';
+import { ConfigModel } from '../models/ConfigModel';
 import { BaseApi } from './BaseApi';
 
-export class AdminApi extends BaseApi {
+export class ConfigApi extends BaseApi {
 
     public async getListPager(strWhere: string = "", pageSize: number = 15, pageIndex: number = 1) {
         let url: string = "/api/admin?token=" + this.token + "&size=" + pageSize + "&page=" + pageIndex + strWhere;
-        return await AxiosUtil.get<BasePager<AdminModel>>(url);
+        return await AxiosUtil.get<BasePager<ConfigModel>>(url);
     }
 
     /**
@@ -15,14 +15,14 @@ export class AdminApi extends BaseApi {
      */
     public async getList(strWhere: string = "") {
         let url: string = "/api/admin/lists?token=" + this.token;
-        return await AxiosUtil.get<BaseArray<AdminModel>>(url);
+        return await AxiosUtil.get<BaseArray<ConfigModel>>(url);
     }
 
     /**
      * 添加
      * @param model 
      */
-    public async setAdd(data: AdminModel) {
+    public async setAdd(data: ConfigModel) {
         let url = "/api/admin";
         return await AxiosUtil.post<BaseResult>(url, data);
     }
@@ -32,7 +32,7 @@ export class AdminApi extends BaseApi {
      * @param id 
      * @param model 
      */
-    public async setUpdate(id: number, data: AdminModel) {
+    public async setUpdate(id: number, data: ConfigModel) {
         let url = "/api/admin/" + id;
         return await AxiosUtil.put<BaseResult>(url, data);
     }
@@ -51,6 +51,6 @@ export class AdminApi extends BaseApi {
      */
     public async getModel(id: number) {
         let url = "/api/admin/" + id;
-        return await AxiosUtil.get<BaseModel<AdminModel>>(url);
+        return await AxiosUtil.get<BaseModel<ConfigModel>>(url);
     }
 }

@@ -1,4 +1,4 @@
 module.exports = {
 	productionSourceMap: false,
-	filenameHashing: debug,
+	filenameHashing: false
 }
