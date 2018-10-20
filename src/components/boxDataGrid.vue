@@ -130,7 +130,9 @@ export default class boxDataGrid extends Vue {
           cellMinWidth: 80,
           cols: [this.options.cols],
           data: this.options.data,
-          //page: true,
+          page: {
+            count:1000
+          },
           limit: 20,
           toolbar: "#toolbarDemo",
           height: height
