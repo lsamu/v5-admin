@@ -16,20 +16,28 @@ declare namespace BoxExpress {
 }
 
 declare namespace BoxExpress.ui {
+
+    export interface boxDataGridColumns {
+
+    }
+
     export interface boxDataGridOptions {
         /**
          * 标题
          */
         title?: string;
+        data?: any[],
+        cols?: boxDataGridColumns[],
+        parseData?: (res: any) => void
     }
     export class boxDataGrid extends Component {
-        option(config?: boxDataGridOptions);
+        option(config?: any);
     }
 
     export interface boxFormOptions {
 
     }
-    
+
     export interface boxFormOptions {
         /**
          * 标题

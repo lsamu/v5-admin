@@ -65,7 +65,8 @@
         </div>
       </form>
     </div>
-    <table class="layui-hide" id="test"></table>
+    <table class="layui-hide" id="test_data_grid" lay-filter="data_grid"></table>
+    <div id="pager"></div>
     <script type="text/html" id="toolbarDemo">
       <div class="layui-btn-container">
 				<button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加</button>
@@ -82,6 +83,7 @@
 <script lang="ts">
 import { Component, Vue, Watch, Prop } from "vue-property-decorator";
 import $ from "jquery";
+import axios from "axios";
 
 @Component({})
 export default class boxDataGrid extends Vue {
@@ -98,6 +100,9 @@ export default class boxDataGrid extends Vue {
       data: [],
       title: this.title ? this.title : "列表测试"
     };
+    axios.get("http://bb.cn/api/article").then(a => {
+      console.log(a);
+    });
   }
 
   /**
@@ -109,6 +114,7 @@ export default class boxDataGrid extends Vue {
       layui.use(["table", "form"], () => {
         let form = layui.form;
         let table = layui.table;
+        let laypage = layui.laypage;
         form.render();
 
         let height_1 =
@@ -116,17 +122,38 @@ export default class boxDataGrid extends Vue {
           $(".box-form-query").height() +
           $(".box-form-query-single").height();
 
-        let height = "full-" + (Math.round(height_1) + 155);
+        let height = "full-" + (Math.round(height_1) + 215);
+        //渲染表格
         table.render({
-          elem: "#test",
+          id: "data_grid",
+          elem: "#test_data_grid",
           cellMinWidth: 80,
           cols: [this.options.cols],
           data: this.options.data,
-          page: true,
+          //page: true,
+          limit: 20,
           toolbar: "#toolbarDemo",
-          totalRow: true,
           height: height
+          //url:"http://bb.cn/api/article"
         });
+        //监听表格排序
+        table.on("sort(data_grid)", function(obj) {
+          console.log(obj);
+        });
+        //监听分页数据
+
+        //分页
+        laypage.render({
+          elem: "pager",
+          count: 100,
+          layout: ["count", "prev", "page", "next", "limit", "refresh", "skip"],
+          jump: function(obj) {
+            table.reload('data_grid',{
+              
+            });
+          }
+        });
+        //
       });
     });
   }

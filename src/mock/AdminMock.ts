@@ -1,4 +1,5 @@
 import Mock from 'mockjs';
+let Random = Mock.Random;
 
 Mock.mock('/api/admin',"get",()=>{
     return {

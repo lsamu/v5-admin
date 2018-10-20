@@ -1,6 +1,6 @@
 import Mock from 'mockjs';
 
-Mock.mock('/api/article',"get",()=>{
+Mock.mock('http://bb.cn/api/article',"get",()=>{
     return {
         code:0,
         msg:"成功",
