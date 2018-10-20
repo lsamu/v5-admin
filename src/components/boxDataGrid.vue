@@ -66,11 +66,11 @@
       </form>
     </div>
     <table class="layui-hide" id="test_data_grid" lay-filter="data_grid"></table>
-    <div id="pager"></div>
+    <!-- <div id="pager"></div> -->
     <script type="text/html" id="toolbarDemo">
       <div class="layui-btn-container">
 				<button class="layui-btn layui-btn-sm" lay-event="getCheckData">添加</button>
-				<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">刷新</button>
+				<button class="layui-btn layui-btn-sm" lay-event="getCheckLength" @click="refresh">刷新</button>
 				<button class="layui-btn layui-btn-sm" lay-event="isAll">批量设置</button>
 			</div>
 		</script>
@@ -98,11 +98,11 @@ export default class boxDataGrid extends Vue {
     this.options = {
       cols: [],
       data: [],
-      title: this.title ? this.title : "列表测试"
+      title: this.title ? this.title : "列表测试",
+      pager: {
+        size: 20
+      }
     };
-    axios.get("http://bb.cn/api/article").then(a => {
-      console.log(a);
-    });
   }
 
   /**
@@ -122,7 +122,7 @@ export default class boxDataGrid extends Vue {
           $(".box-form-query").height() +
           $(".box-form-query-single").height();
 
-        let height = "full-" + (Math.round(height_1) + 215);
+        let height = "full-" + (Math.round(height_1) + 155);
         //渲染表格
         table.render({
           id: "data_grid",
@@ -130,36 +130,39 @@ export default class boxDataGrid extends Vue {
           cellMinWidth: 80,
           cols: [this.options.cols],
           data: this.options.data,
-          page: {
-            count:1000
-          },
-          limit: 20,
+          page: true,
+          limit: this.options.pager.size,
           toolbar: "#toolbarDemo",
-          height: height
-          //url:"http://bb.cn/api/article"
+          height: height,
+          url: "/static/json/user.json?a=1"
         });
         //监听表格排序
         table.on("sort(data_grid)", function(obj) {
           console.log(obj);
         });
         //监听分页数据
-
-        //分页
-        laypage.render({
-          elem: "pager",
-          count: 100,
-          layout: ["count", "prev", "page", "next", "limit", "refresh", "skip"],
-          jump: function(obj) {
-            table.reload('data_grid',{
-              
-            });
-          }
+        //监听选中数据
+        table.on('toolbar(data_grid)', function(obj){
+          console.log(obj);
         });
+        //分页
+        // laypage.render({
+        //   elem: "pager",
+        //   count: 100,
+        //   layout: ["count", "prev", "page", "next", "limit", "refresh", "skip"],
+        //   jump: function(obj) {
+        //     table.reload("data_grid", {});
+        //   }
+        // });
         //
       });
     });
   }
 
+  public refresh() {
+    this.options.pager.size = 50;
+    console.log(this.options);
+  }
   /**
    * 操作选项
    */
