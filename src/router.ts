@@ -43,6 +43,10 @@ const constantRouterMap = [
     component: () => import('./views/test_form.vue'),
   },
   {
+    path: "/test_index",
+    component: () => import('./views/test_index.vue'),
+  },
+  {
     path: "/",
     component: () => import('./views/index/layout.vue'),
     redirect: '/admin/login',
