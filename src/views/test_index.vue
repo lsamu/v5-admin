@@ -3,14 +3,17 @@
         <boxTest ref="boxTestKey" :disabled="disabled" value="默认值"></boxTest>
         <button @click="open">打开</button>
         <button @click="close">关闭</button>
+        <boxPupop>我是弹窗内容</boxPupop>
     </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from "vue-property-decorator";
 import boxTest from "@/components/boxTest.vue";
+import boxPupop from "@/components/box/boxPopup.vue";
 @Component({
   components: {
-    boxTest
+    boxTest,
+    boxPupop
   }
 })
 export default class test_index extends Vue {

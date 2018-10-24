@@ -6,7 +6,6 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Watch, Prop } from "vue-property-decorator";
-import { triggerAsyncId } from "async_hooks";
 
 @Component({})
 export default class boxTest extends Vue {
@@ -37,6 +36,7 @@ export default class boxTest extends Vue {
   }
 
   private mounted() {
+   
     //循环监听属性
     Object.keys(this.$props).forEach((prop: string) => {
       this.$watch(prop, (value: any) => {
@@ -52,10 +52,10 @@ export default class boxTest extends Vue {
   }
 
   public close() {
-    //this.option("disabled", true);
-    Object.assign(this.$data.options, {
-      disabled: true
-    });
+     console.log(this);
+    //需要查找实例
+    // /this.option("disabled", true);
+    this.disabled=true;
   }
 
   public option(oo: any, vv: any) {
@@ -64,7 +64,6 @@ export default class boxTest extends Vue {
     } else {
       this.$data.options[oo] = vv;
     }
-    console.log(this.$data.options);
   }
 }
 </script>
